@@ -13,6 +13,7 @@ app = FastAPI(
 )
 
 app.include_router(tasks.router, prefix="/tasks", tags=["tasks"])
+app.include_router(users.router, prefix="/users", tags=["users"])
 
 app.add_middleware(
     CORSMiddleware,
@@ -20,7 +21,6 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
-    
 )
 
 @app.get("/")

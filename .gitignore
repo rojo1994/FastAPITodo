@@ -8,3 +8,5 @@ venv/
 ENV/
 .env
 .venv/
+services/__pycache__/
+controllers/__pycache__/

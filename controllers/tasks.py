@@ -14,8 +14,14 @@ def create(task: schemas.taskPost, db: Session = Depends(get_db), user = Depends
 
 @router.get("/", response_model=List[schemas.taskGet])
 def get_all(db: Session = Depends(get_db), user = Depends(auth.get_current_user)):
-    print("Inside get_all endpoint")
     return taskService.get_all_tasks(db, user.id)
+
+@router.get("/{task_id}", response_model=schemas.taskGet)
+def get_task_by_id(task_id: int, db: Session = Depends(get_db), user = Depends(auth.get_current_user)):
+    task = taskService.get_task_by_id(db, task_id, user.id)
+    if not task:
+        raise HTTPException(status_code=404, detail="No se encontro la task.")
+    return task
 
 @router.put("/{task_id}", response_model=schemas.taskGet)
 def update_task(task_id: int, task: schemas.taskPost ,db: Session = Depends(get_db), user = Depends(auth.get_current_user)):
